@@ -14,7 +14,8 @@ services:
       - ./conf/1:/conf
       - ./data/1:/data
     networks:
-      - extnet
+      extnet:
+        ipv4_address: 192.168.101.254 
 
   zoo2:
     image: zookeeper
@@ -29,7 +30,8 @@ services:
       - ./conf/2:/conf
       - ./data/2:/data
     networks:
-      - extnet
+      extnet:
+        ipv4_address: 192.168.101.253
 
   zoo3:
     image: zookeeper
@@ -44,7 +46,8 @@ services:
       - ./conf/3:/conf
       - ./data/3:/data
     networks:
-      - extnet
+      extnet:
+        ipv4_address: 192.168.101.253
 
   web:
     image: elkozmon/zoonavigator-web:latest
@@ -89,6 +92,19 @@ services:
       - ./server.conf:/usr/local/apache2/conf/server.conf
     networks:
       - extnet
+
+  visualizer:
+    image: dockersamples/visualizer
+    ports:
+     - 8008:8080
+    deploy:
+     placement:
+      constraints:
+       - node.role == manager
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+     - extnet
 
 networks: 
     extnet:
