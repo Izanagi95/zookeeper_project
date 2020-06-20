@@ -75,17 +75,18 @@ services:
     networks:
       - extnet
 
-
-  proxy:
-    image: nginx
-    volumes:
-     - ./nginx.conf:/etc/nginx/nginx.conf:rw
+  web_server:
+    image: httpd:latest
+    restart: always
+    hostname: web_server
     ports:
-     - "80:80"
-#     - "8080:8080"
+      - 80:80
+    deploy:
+      mode: global
+    depends_on:
+      - api
     networks:
-     - extnet
-
+      - extnet
 
 networks: 
     extnet:
