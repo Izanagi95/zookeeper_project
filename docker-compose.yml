@@ -85,6 +85,8 @@ services:
       mode: global
     depends_on:
       - api
+    volumes:
+      - ./apache_conf:/usr/local/apache2/conf
     networks:
       - extnet
 
