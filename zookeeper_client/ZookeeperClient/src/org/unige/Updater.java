@@ -11,6 +11,7 @@ public class Updater implements Runnable {
     String connection = null;
     String path = null;
     CuratorFramework client = null;
+    final String filePath = "/home/chenghao/Desktop/zookeeper_project/server.conf";
 
     public Updater(String connection, String path, CuratorFramework client){
         this.connection = connection;
@@ -27,7 +28,7 @@ public class Updater implements Runnable {
             e.printStackTrace();
         }
 
-        File file = new File("conf.txt");
+        File file = new File(filePath);
 
         if(!file.exists()) {
             try {
@@ -44,7 +45,7 @@ public class Updater implements Runnable {
 
         try {
             assert text != null;
-            Files.write(Paths.get("conf.txt"), text);
+            Files.write(Paths.get(filePath), text);
         } catch (IOException e) {
             e.printStackTrace();
         }
